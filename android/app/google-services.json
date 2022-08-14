@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "643869589667",
+    "project_id": "keepinvo",
+    "storage_bucket": "keepinvo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643869589667:android:1a222bb09b63f58d927f16",
+        "android_client_info": {
+          "package_name": "com.rnmlkittutorial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643869589667-7qos5vf4d8co9p5326ghpj441bvjlrna.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB33WQL7Js9zYZEV33qDqJVdEYXW0h0LCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643869589667-7qos5vf4d8co9p5326ghpj441bvjlrna.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

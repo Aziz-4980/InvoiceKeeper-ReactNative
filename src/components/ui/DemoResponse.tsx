@@ -1,14 +1,25 @@
 import * as React from 'react';
 import {Text, View, StyleSheet, ViewStyle, TextStyle} from 'react-native';
 
-export function DemoResponse({children}: React.PropsWithChildren<{}>) {
-  if (children == null) {
-    return null;
-  }
+type resStrBlock = {
+  blockText: string[]
+}
+
+export const DemoResponse:React.FC<resStrBlock> = ({blockText }) => {
+  // if (children == null) {
+  //   return null;
+  // }else{
+  //   console.log("Children : ",children);
+  // }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{JSON.stringify(children, null, 2)}</Text>
+      {/* <Text style={styles.text}> */}
+        {/* {blockText} */}
+
+        {blockText?.map((child:any) => <Text>{child.text}</Text>)}
+        {/* {JSON.stringify(children, null, 2)} */}
+        {/* </Text> */}
     </View>
   );
 }
@@ -29,3 +40,5 @@ const styles = StyleSheet.create<Styles>({
     color: 'black',
   },
 });
+
+// export default DemoResponse;
