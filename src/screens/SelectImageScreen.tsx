@@ -150,8 +150,9 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
         // console.log(strNo);
       }
       if (b.text.match(/[a-zA-Z][a-zA-Z][a-zA-Z]\s[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]#/)) {
-        var f = b.text.split(/[a-zA-Z][a-zA-Z][a-zA-Z]\s[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]#/);
-        fbrNo = f[1];
+       // var f = b.text.split(/[a-zA-Z][a-zA-Z][a-zA-Z]\s[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]#/);
+        //fbrNo = f[1];
+        fbrNo = data[bi+1].text;
       }
       if (b.text.match(/\d\d-[a-zA-Z][a-zA-Z][a-zA-Z]-\d\d/)) 
       {
@@ -161,20 +162,20 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
         invoiceYY = ele[2];
       }
 
-      if (bi > 9 && !b.text.match(/[a-zA-Z]+.*\([^)]*\)/)) {
-        if (bi % 3 == 1 && b.text.match(/\d [a-zA-Z]+ [a-zA-Z][a-zA-Z]/)) {
+      if (bi > 11 && !b.text.match(/[a-zA-Z]+.*\([^)]*\)/)) {
+        if (bi % 3 == 0 && b.text.match(/\d [a-zA-Z]+ [a-zA-Z][a-zA-Z]/)) {
           var qt = b.text.split(/\d/);
           var pr = b.text.split(/[a-zA-Z]+ [a-zA-Z][a-zA-Z]/);
           quantity.push(pr[0]);
           product.push(qt[1]);
         }
-        else if (bi % 3 == 2) {
+        else if (bi % 3 == 1) {
           if (!isNaN(parseFloat(b.text))) {
             rate.push(b.text);
           }
 
         }
-        else if (bi % 3 == 0 && !b.text.match(/[a-zA-Z]+.*\([^)]*\)/)) {
+        else if (bi % 3 == 2 && !b.text.match(/[a-zA-Z]+.*\([^)]*\)/)) {
           if (!isNaN(parseInt(b.text))) {
             amount.push(b.text);
           }
@@ -182,7 +183,7 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
         }
 
 
-      }  
+      } 
       if (b.text.match(/@.*%/)) {
           if(data[bi-1].text.match(/[a-zA-Z][a-zA-Z]\./)){
             var t = data[bi-1].text.split(/[a-zA-Z][a-zA-Z]\./);
