@@ -12,13 +12,14 @@ import {SelectImageScreen} from '../screens/SelectImageScreen';
 import {ProcessImageScreen} from '../screens/ProcessImageScreen';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen'
-
+import ReportsScreen from '../screens/ReportsScreen';
 import {RouteProp} from '@react-navigation/native';
 
 type RootStackParamList = {
   [routes.SELECT_SCREEN]: undefined;
   [routes.HOME_SCREEN]: undefined;
   [routes.LOGIN_SCREEN]: undefined;
+  [routes.REPORT_SCREEN]: undefined;
   [routes.PROCESS_IMAGE_SCREEN]: {
     uri: string;
   };
@@ -46,6 +47,9 @@ export type ProcessImageRouteProps = RouteProp<
 
 
 
+
+
+
 export const Navigator = () => (
   <Stack.Navigator
     screenOptions={{
@@ -57,5 +61,6 @@ export const Navigator = () => (
     <Stack.Screen name={routes.SELECT_SCREEN} component={SelectImageScreen} />
     <Stack.Screen name={routes.PROCESS_IMAGE_SCREEN}  component={ProcessImageScreen}/>
     <Stack.Screen name={routes.HOME_SCREEN} component={HomeScreen} />
+    <Stack.Screen name={routes.REPORT_SCREEN} component={ReportsScreen}/>
   </Stack.Navigator>
 );
