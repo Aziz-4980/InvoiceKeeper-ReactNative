@@ -21,7 +21,7 @@ import { recognizeImage, Response } from '../mlkit';
 import * as routes from '../navigation/routes';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FadeInFromBottomAndroidSpec } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionSpecs';
-
+import PureChart from 'react-native-pure-chart';
 
 type SelectImageScreenProps = {
   navigation: SelectScreenNavigationProps;
@@ -390,9 +390,48 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
     }
   };
 
+
+  let sampleData = [
+    {
+      seriesName: 'series1',
+      data: [
+        {x: '2018-02-01', y: 30},
+        {x: '2018-02-02', y: 200},
+        {x: '2018-02-03', y: 170},
+        {x: '2018-02-04', y: 250},
+        {x: '2018-02-05', y: 10}
+      ],
+      color: 'red'
+    },
+    {
+      seriesName: 'series2',
+      data: [
+        {x: '2018-02-01', y: 20},
+        {x: '2018-02-02', y: 100},
+        {x: '2018-02-03', y: 140},
+        {x: '2018-02-04', y: 550},
+        {x: '2018-02-05', y: 40}
+      ],
+      color: 'yellow'
+    },
+    {
+      seriesName: 'series3',
+      data: [
+        {x: '2018-02-01', y: 30},
+        {x: '2018-02-02', y: 130},
+        {x: '2018-02-03', y: 160},
+        {x: '2018-02-04', y: 50},
+        {x: '2018-02-05', y: 400}
+      ],
+      color: 'blue'
+    }
+  ]
+
   return (
     <View style={{}}>
+      
       <SafeAreaView style={{}}>
+      <PureChart data={sampleData} type='bar' />
         <View style={{ flexDirection: 'row', paddingBottom: 8 }}>
           <DemoButton key="Process Image" onPress={onProcessImage}>
             {'Process Image'}
