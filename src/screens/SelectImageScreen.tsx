@@ -324,7 +324,7 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
         console.log('Total users: ', querySnapshot.size);
 
         querySnapshot.forEach(documentSnapshot => {
-          console.log('Invoice', documentSnapshot.data().products);
+          // console.log('Invoice', documentSnapshot.data().products);
         });
       });
   }, [])
