@@ -21,7 +21,6 @@ import { recognizeImage, Response } from '../mlkit';
 import * as routes from '../navigation/routes';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FadeInFromBottomAndroidSpec } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionSpecs';
-// import PureChart from 'react-native-pure-chart';
 
 type SelectImageScreenProps = {
   navigation: SelectScreenNavigationProps;
@@ -36,7 +35,6 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
 
 
   const pushData = (data) => {
-    // var pushQty = [], pushAmt = [], pushGovt = [], pushGrandTotal = [], pushProduct = [], pushRate = [], pushTotal = [];
     var invoiceTitle = '';
     var ntnNo = "0043796-4";
     var strNo = '';
@@ -54,83 +52,7 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
     var gst;
     var govtCharges;
     var grandTotal;
-    // if (!Number.isInteger(data[0].text)) {
-    //   invoiceTitle = data[0].text;
-    // }
-    // console.log(invoiceTitle);
-    // for (var i = 0; i <= data.length; i++) {
-    //   if (data[i]?.text.includes('NTN:')) {
-    //     var ele = data[i].text.split(' ');
-    //     ntnNo = ele[1];
-    //     console.log(ntnNo);
-    //   }
-    //   if (data[i]?.text.includes('STRN:')) {
-    //     var ele = data[i].text.split(' ');
-    //     strNo = ele[1] + ele[2] + ele[3];
-    //     console.log(strNo);
-    //   }
-    //   if (data[i]?.text.includes('FBR Invoice#')) {
-    //     fbrNo = data[i + 1].text;
-    //     console.log(fbrNo);
-    //     location = data[i + 2].text;
-    //     console.log(location);
-    //     branchCode = data[i + 3].text;
-    //     console.log(branchCode);
-    //     var ele = data[i + 4].text.split('-');
-    //     invoiceDD = ele[0];
-    //     invoiceMM = ele[1];
-    //     invoiceYY = ele[2];
-    //     console.log(invoiceDD + '-' + invoiceMM + '-' + invoiceYY);
-    //   }
 
-    //   // if (data[i]?.text.includes('Qty')) {
-    //   //   j = i;
-    //   //   while(data[j]?.text != 'Total (Excl. GST):'){
-    //   //     if(j % 3 == 0){
-    //   //       var ele = data[j]?.text.split(' ');
-    //   //       quantity.push(parseInt(ele[0]));
-    //   //       product.push(ele[1] + ele[2]); 
-    //   //     }  
-    //   //     j++;
-    //   //   }
-
-    //   //   if (data[i]?.text.includes('Rate')) {
-    //   //     j =i;
-    //   //     while(data[j].text != 'Total (Excl. GST):'){
-    //   //       if(j%4 ==0){
-    //   //       rate.push(parseFloat(data[j]?.text));
-    //   //       console.log(rate[j]);
-    //   //                 }
-    //   //                 j++;
-    //   //     }
-
-    //   //   }
-    //   //   if (data[i]?.text.includes('Amt')) {
-    //   //     j = i;
-    //   //     while(data[j]?.text != 'Total (Excl. GST):'){
-    //   //       if(j % 4 == 0){
-    //   //         amount.push(parseInt(data[j]?.text));
-    //   //         console.log(rate[j]);
-    //   //       }
-    //   //       j++;
-    //   //     }
-
-    //   //   }
-    //   // }
-    //   if(data[i]?.text == 'Total (Excl. GST):'){
-    //   var ele = data[i+1].text.split(' ');
-    //   total = ele[1];
-    //   gst = data[i+3].text;
-    //   govtCharges = data[i+5].text;
-    //   var ele = data[i+7].text.split(' ');
-    //   grandTotal= ele[1];
-    //   console.log(total);
-    //   console.log(gst);
-    //   console.log(govtCharges);
-    //   console.log(grandTotal);  
-    //   }
-    // }
-    
     data.map((b, bi) => {
 
       console.log(`Block #${bi} ===> ${b.text}`);
@@ -143,19 +65,18 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
           //if first block is not title
         }
       }
-     
+
       if (bi == 2 && b.text.match(/\d\d\d\d\d\d\d\d\d\d\d\d\d/)) {
         var str = b.text.split(/[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]:/);
         strNo = str[1];
         // console.log(strNo);
       }
       if (b.text.match(/[a-zA-Z][a-zA-Z][a-zA-Z]\s[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]#/)) {
-       // var f = b.text.split(/[a-zA-Z][a-zA-Z][a-zA-Z]\s[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]#/);
+        // var f = b.text.split(/[a-zA-Z][a-zA-Z][a-zA-Z]\s[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]#/);
         //fbrNo = f[1];
-        fbrNo = data[bi+1].text;
+        fbrNo = data[bi + 1].text;
       }
-      if (b.text.match(/\d\d-[a-zA-Z][a-zA-Z][a-zA-Z]-\d\d/)) 
-      {
+      if (b.text.match(/\d\d-[a-zA-Z][a-zA-Z][a-zA-Z]-\d\d/)) {
         var ele = b.text.split("-");
         invoiceDD = ele[0];
         invoiceMM = ele[1];
@@ -183,87 +104,19 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
         }
 
 
-      } 
-      if (b.text.match(/@.*%/)) {
-          if(data[bi-1].text.match(/[a-zA-Z][a-zA-Z]\./)){
-            var t = data[bi-1].text.split(/[a-zA-Z][a-zA-Z]\./);
-            total = t[1];
-          }
-          gst = data[bi+1].text;
-          govtCharges = data[bi+3].text;
-          if(data[bi+5].text.match(/[a-zA-Z][a-zA-Z]\./)){
-            var gt = data[bi+5].text.split(/[a-zA-Z][a-zA-Z]\./);
-            grandTotal = gt[1];
-          }
       }
-
-
-      // if(bi%2 == 0 && b.text.match(/\d [a-zA-Z]+ [a-zA-Z][a-zA-Z]/)){
-
-      // }
-      // while(bi > 10 &&  !b.text.includes("Total")){
-      //   if(bi % 3 == 1){
-      //     var ele1 = b.text.split(" ");
-      //     if(Number.isInteger(ele1[0])){
-      //       quantity.push(ele1[0]);
-      //       console.log(ele1[0]);
-
-      //     }
-
-      //   }
-
-      // }
-      //  if(l.text == '')
-      // while (l.text != 'Total' && bi>'2') {
-
-      //   if (l.text == 'Qty' || l.text == 'Product' || l.text == 'Rate' || l.text == 'Amt') {
-
-      //   } else {
-      //     if (counter == 0) {
-      //        pushQty.push(l.text);
-      //      //  console.log(pushQty);
-      //       counter++;
-      //     } else if (counter == 1) {
-      //        pushProduct.push(l.text);
-      //       counter++;
-      //     } else if (counter == 2) {
-      //        pushRate.push(l.text);
-      //       counter++;
-
-      //     } else if (counter == 3) {
-      //        pushAmt.push(l.text);
-      //       counter++;
-      //     } else {
-      //       counter = 0;
-      //     }
-
-      //   }
-
-
-      // }
-      // var counter1 = 0;
-      // if (l.text == 'Total' || l.text == 'Gst' || l.text == 'Govt' || l.text == 'GrandTotal') {
-
-      // } else {
-      //   if (counter == 0) {
-      //      pushTotal.push(l.text);
-      //     counter1++;
-      //   } else if (counter == 1) {
-      //      pushGovt.push(l.text);
-      //     counter1++;
-      //   } else if (counter == 2) {
-      //      pushGrandTotal.push(l.text);
-      //     counter1++;
-      //   }
-
-      // } counter1 = 0;
-      // var ele = l.text.split(" ");
-      // ele.map((e, ei) => {
-      //   console.log(`elements #${ei} ===> ${e}`);
-      // })
-      // })
-      // })
-
+      if (b.text.match(/@.*%/)) {
+        if (data[bi - 1].text.match(/[a-zA-Z][a-zA-Z]\./)) {
+          var t = data[bi - 1].text.split(/[a-zA-Z][a-zA-Z]\./);
+          total = t[1];
+        }
+        gst = data[bi + 1].text;
+        govtCharges = data[bi + 3].text;
+        if (data[bi + 5].text.match(/[a-zA-Z][a-zA-Z]\./)) {
+          var gt = data[bi + 5].text.split(/[a-zA-Z][a-zA-Z]\./);
+          grandTotal = gt[1];
+        }
+      }
 
     });
     console.log("Invoice Title: " + `${invoiceTitle}`);
@@ -282,40 +135,7 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
     console.log(`GST: ${gst}`);
     console.log(`Govt.Charges: ${govtCharges}`);
     console.log(`Grand Total: ${grandTotal}`);
-    //var array = [1, 2, 3],
-    // var item;
-
-
-    // for (item of amount.slice(0, -1)) {
-    //     amount.push(item);
-    // }
-    // console.log(`Amount: ${amount}`);
-
-    // firestore()
-    //   .collection('invoices')
-    //   .add({
-    //     title:invoiceTitle,
-    //     ntn:ntnNo,
-    //     strn:strNo,
-    //     fbr:fbrNo,
-    //     date:invoiceDD,
-    //     month:invoiceMM,
-    //     year:invoiceYY,
-    //     quantity:quantity,
-    //     products:product,
-    //     rate:rate,
-    //     amount:amount,
-    //     total:total,
-    //     gst:gst,
-    //     gc: govtCharges,
-    //     gt:grandTotal,
-    //   })
-    //   .then(() => {
-    //     console.log('successfully added');
-    //   });
-
   }
-
   useEffect(() => {
     firestore()
       .collection('invoices')
@@ -348,29 +168,10 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
         if (response?.blocks?.length > 0) {
           console.log("Image Text Response ====>  ", response);
           setImageTextResponse(response);
-          // setResposne(response);
-          // setAspectRation(response.height / response.width);
 
           var blocks = response.blocks;
           pushData(blocks);
-          // blocks.map((b, bi) => {
-          //   b.lines.map((l, li) => {
-          //     console.log(`Block #${bi} ===> Line #${li} ===> ${l.text}`);
-          //     firestore()
-          //       .collection('invoices')
-          //       .add({
-          //         Amt: `Block #${bi} ===> Line #${li} ===> ${l.text}`
-          //       })
-          //       .then(() => {
-          //         console.log('');
-          //       });
 
-          //     var ele = l.text.split(" ");
-          //     ele.map((e, ei) => {
-          //       console.log(`elements #${ei} ===> ${e}`);
-          //     })
-          //   })
-          // })
         }
       } catch (error) {
         console.log(error);
@@ -382,59 +183,19 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
   const onProcessImage = () => {
     if (response) {
       proccessImage(response?.assets?.[0]?.uri!!);
-      // console.log("Image Text Response ====>  ",response);
-      // setImageTextResponse(response);
-      // navigation.navigate(routes.PROCESS_IMAGE_SCREEN, {
-      //   uri: response?.assets?.[0]?.uri!!,
-      // });
+
     }
   };
 
 
-  // let sampleData = [
-  //   {
-  //     seriesName: 'series1',
-  //     data: [
-  //       {x: '2018-02-01', y: 30},
-  //       {x: '2018-02-02', y: 200},
-  //       {x: '2018-02-03', y: 170},
-  //       {x: '2018-02-04', y: 250},
-  //       {x: '2018-02-05', y: 10}
-  //     ],
-  //     color: 'red'
-  //   },
-  //   {
-  //     seriesName: 'series2',
-  //     data: [
-  //       {x: '2018-02-01', y: 20},
-  //       {x: '2018-02-02', y: 100},
-  //       {x: '2018-02-03', y: 140},
-  //       {x: '2018-02-04', y: 550},
-  //       {x: '2018-02-05', y: 40}
-  //     ],
-  //     color: 'yellow'
-  //   },
-  //   {
-  //     seriesName: 'series3',
-  //     data: [
-  //       {x: '2018-02-01', y: 30},
-  //       {x: '2018-02-02', y: 130},
-  //       {x: '2018-02-03', y: 160},
-  //       {x: '2018-02-04', y: 50},
-  //       {x: '2018-02-05', y: 400}
-  //     ],
-  //     color: 'blue'
-  //   }
-  // ]
 
-  const onReportScreen = () =>{
+  const onReportScreen = () => {
     navigation.navigate(routes.REPORT_SCREEN);
   }
   return (
     <View style={{}}>
-      
+
       <SafeAreaView style={{}}>
-      {/* <PureChart data={sampleData} type='bar' /> */}
         <View style={{ flexDirection: 'row', paddingBottom: 8 }}>
           <DemoButton key="Process Image" onPress={onProcessImage}>
             {'Process Image'}
