@@ -1,8 +1,8 @@
-/**
- * Created by Dima Portenko on 30.06.2021
- */
+
 import React, { useEffect, useState } from 'react';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+ 
 import {
   View,
   SafeAreaView,
@@ -10,6 +10,7 @@ import {
   StyleSheet,
   useWindowDimensions,
   Text,
+  Alert,
 } from 'react-native';
 import { DemoButton } from '../components/ui';
 import { DemoResponse } from '../components/ui';
@@ -135,6 +136,70 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
     console.log(`GST: ${gst}`);
     console.log(`Govt.Charges: ${govtCharges}`);
     console.log(`Grand Total: ${grandTotal}`);
+
+    var currentUserID = auth().currentUser?.uid;
+    console.log(currentUserID);
+    
+ try {
+  firestore()
+  .collection('invoices')
+  .add({
+    uid: currentUserID,
+    title:invoiceTitle,
+    ntn:ntnNo,
+    strn:strNo,
+    fbr:fbrNo,
+    date:invoiceDD,
+    month:invoiceMM,
+    year:invoiceYY,
+    quantity:quantity,
+    products:product,
+    rate:rate,
+    amount:amount,
+    total:total,
+    gst:gst,
+    gc: govtCharges,
+    gt:grandTotal,
+  })
+  .then(() => {
+    console.log('successfully added');
+     Alert.alert(
+"Invoice Processed",
+"The invoice has been processed successfully. To view the reports please click \"View Report Button\" ",
+[
+  {
+    text: "Okayy!",
+    // onPress: () => Alert.alert("Okayy! Pressed"),
+    style: "Okayy!",
+  },
+],
+{
+  cancelable: true,
+  
+}
+);
+  })
+ } catch (error) {
+  console.log("error occured", error);
+  Alert.alert(
+    "Error occured",
+    ` ${error}`,
+    [
+      {
+        text: "Okayy!",
+        // onPress: () => Alert.alert("Okayy! Pressed"),
+        style: "Okayy!",
+      },
+    ],
+    {
+      cancelable: true,
+      
+    }
+    )
+ }
+
+
+
   }
   useEffect(() => {
     firestore()

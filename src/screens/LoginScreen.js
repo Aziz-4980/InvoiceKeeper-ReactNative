@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 // import { auth } from '../firebase'
 import auth from '@react-native-firebase/auth';
 // import app from '@react-native-firebase/app';
@@ -31,15 +31,48 @@ const LoginScreen = () => {
       .catch(error => alert(error.message))
   }
 
+  const validateFormFields = () => {                          // <= Added this function
+    const strongRegex = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
+
+    if (!strongRegex.test(email)) {
+        showMessage(MESSAGE.email)
+        return false;
+    } else if (password.length < 8) {
+        showMessage(MESSAGE.password);
+        return false;
+    }
+}
   const handleLogin = () => {
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
-        console.log('Logged in with:', user.email);
-        navigation.navigate("PickImage");
-      })
-      .catch(error => alert(error.message))
+   
+    try {
+    validateFormFields();
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(userCredentials => {
+          const user = userCredentials.user;
+          console.log('Logged in with:', user.email);
+          navigation.navigate("PickImage");
+        })
+      
+    } catch (error) {
+      Alert.alert(
+        "Error occured",
+        ` ${error}`,
+        [
+          {
+            text: "Okayy!",
+            // onPress: () => Alert.alert("Okayy! Pressed"),
+            style: "Okayy!",
+          },
+        ],
+        {
+          cancelable: true,
+          
+        }
+        )
+    }
+   
+      
   }
 
   return (
