@@ -1,6 +1,4 @@
-/**
- * Created by Dima Portenko on 05.07.2021
- */
+
 import React, {useEffect, useState} from 'react';
 import {Image, useWindowDimensions, ScrollView} from 'react-native';
 import {

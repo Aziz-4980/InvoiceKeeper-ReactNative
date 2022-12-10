@@ -5,6 +5,7 @@ import auth from '@react-native-firebase/auth';
 import PureChart from 'react-native-pure-chart';
 import firestore from '@react-native-firebase/firestore';
 import { DemoButton } from '../components/ui';
+// import auth from '@react-native-firebase/auth';
 
 
 const ReportsScreen = () => {
@@ -12,7 +13,7 @@ const ReportsScreen = () => {
 
   var products = [];
   var amount = [];
-  
+  var currentUserID = auth().currentUser?.uid;
   useEffect(() => {
     firestore()
       .collection('invoices')
@@ -22,8 +23,8 @@ const ReportsScreen = () => {
 
         querySnapshot.forEach(documentSnapshot => {
           // console.log('Invoice', documentSnapshot.data().products);
-          products.push(documentSnapshot.data().products);
-          amount.push(documentSnapshot.data().amount);
+          if(documentSnapshot.data().uid === currentUserID ){  products.push(documentSnapshot.data().products);
+          amount.push(documentSnapshot.data().amount);}
         });
       });
 
@@ -78,15 +79,26 @@ function getReduced(total, {x,y}) {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
-        <DemoButton key="Press Me" onPress={pressMe}>
-          {'Press Me'}
+      <View style={{marginTop: 20}}>
+        <DemoButton key="Click to view report" onPress={pressMe}>
+          {'Click to view report'}
         </DemoButton>
 
         {/* <PureChart data={sampleData1} type='line' /> */}
 
 
+
       </View>
+      <View >
+        <Text style={{ color: 'black',
+        marginBottom: 20,
+        marginTop:20,
+    fontWeight: '700',
+    fontSize: 16, 
+    justifyContent: 'center',
+    alignItems: 'center' }}>Product vs amount paid </Text>
+      </View>
+
       { sampleData &&
       <PureChart data={sampleData} 
       height={200}

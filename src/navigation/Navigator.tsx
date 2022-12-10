@@ -10,14 +10,15 @@ import {
 import * as routes from './routes';
 import {SelectImageScreen} from '../screens/SelectImageScreen';
 import {ProcessImageScreen} from '../screens/ProcessImageScreen';
-import HomeScreen from '../screens/HomeScreen';
+import SearchScreen from '../screens/SearchScreen';
 import LoginScreen from '../screens/LoginScreen'
 import ReportsScreen from '../screens/ReportsScreen';
 import {RouteProp} from '@react-navigation/native';
+import { Button } from 'react-native';
 
 type RootStackParamList = {
   [routes.SELECT_SCREEN]: undefined;
-  [routes.HOME_SCREEN]: undefined;
+  [routes.SEARCH_SCREEN]: undefined;
   [routes.LOGIN_SCREEN]: undefined;
   [routes.REPORT_SCREEN]: undefined;
   [routes.PROCESS_IMAGE_SCREEN]: {
@@ -58,9 +59,9 @@ export const Navigator = () => (
     }}>
     <Stack.Screen name={routes.LOGIN_SCREEN} component={LoginScreen} />
    
-    <Stack.Screen name={routes.SELECT_SCREEN} component={SelectImageScreen} />
+    <Stack.Screen name={routes.SELECT_SCREEN}  component={SelectImageScreen} />
     <Stack.Screen name={routes.PROCESS_IMAGE_SCREEN}  component={ProcessImageScreen}/>
-    <Stack.Screen name={routes.HOME_SCREEN} component={HomeScreen} />
+    <Stack.Screen name={routes.SEARCH_SCREEN} component={SearchScreen} />
     <Stack.Screen name={routes.REPORT_SCREEN} component={ReportsScreen}/>
   </Stack.Navigator>
 );
