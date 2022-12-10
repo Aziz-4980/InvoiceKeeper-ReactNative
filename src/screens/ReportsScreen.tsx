@@ -79,15 +79,26 @@ function getReduced(total, {x,y}) {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
-        <DemoButton key="Press Me" onPress={pressMe}>
-          {'Press Me'}
+      <View style={{marginTop: 20}}>
+        <DemoButton key="Click to view report" onPress={pressMe}>
+          {'Click to view report'}
         </DemoButton>
 
         {/* <PureChart data={sampleData1} type='line' /> */}
 
 
+
       </View>
+      <View >
+        <Text style={{ color: 'black',
+        marginBottom: 20,
+        marginTop:20,
+    fontWeight: '700',
+    fontSize: 16, 
+    justifyContent: 'center',
+    alignItems: 'center' }}>Product vs amount paid </Text>
+      </View>
+
       { sampleData &&
       <PureChart data={sampleData} 
       height={200}

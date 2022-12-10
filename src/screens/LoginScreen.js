@@ -1,9 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { Alert, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-// import { auth } from '../firebase'
 import auth from '@react-native-firebase/auth';
-// import app from '@react-native-firebase/app';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -22,46 +20,55 @@ const LoginScreen = () => {
   }, [])
 
   const handleSignUp = () => {
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
-        console.log('Registered with:', user.email);
-      })
-      .catch(error => alert(error.message))
-  }
 
-  const validateFormFields = () => {                          // <= Added this function
-    const strongRegex = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
-
-    if (!strongRegex.test(email)) {
-        showMessage(MESSAGE.email)
-        return false;
-    } else if (password.length < 8) {
-        showMessage(MESSAGE.password);
-        return false;
-    }
-}
-  const handleLogin = () => {
-   
-    try {
-    validateFormFields();
-      auth()
-        .signInWithEmailAndPassword(email, password)
+    if (email && password) {
+      if(validateFormFields()){
+        auth()
+        .createUserWithEmailAndPassword(email, password)
         .then(userCredentials => {
           const user = userCredentials.user;
-          console.log('Logged in with:', user.email);
-          navigation.navigate("PickImage");
+          console.log('Registered with:', user.email);
         })
-      
-    } catch (error) {
+        .catch(error =>  Alert.alert(
+          "Warning",
+          `something went wrong: ${error.message}`,
+          [
+            {
+              text: "Okayy!",
+              style: "Okayy!",
+            },
+          ],
+          {
+            cancelable: true,
+            
+          }
+          ))
+      }else{
+        console.log("try again");
+        Alert.alert(
+          "Warning",
+          "Please enter valid email and password of length >= 8",
+          [
+            {
+              text: "Okayy!",
+          
+              style: "Okayy!",
+            },
+          ],
+          {
+            cancelable: true,
+            
+          }
+          )
+      }
+    }else{
       Alert.alert(
-        "Error occured",
-        ` ${error}`,
+        "Warning",
+        "Fields cannot be empty",
         [
           {
             text: "Okayy!",
-            // onPress: () => Alert.alert("Okayy! Pressed"),
+        
             style: "Okayy!",
           },
         ],
@@ -71,6 +78,125 @@ const LoginScreen = () => {
         }
         )
     }
+    
+    
+  }
+
+  const validateFormFields = () => {                          // <= Added this function
+    const strongRegex = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
+
+    if (!strongRegex.test(email)) {
+      Alert.alert(
+        "Warning",
+        ` Email not found. try again`,
+        [
+          {
+            text: "Okayy!",
+        
+            style: "Okayy!",
+          },
+        ],
+        {
+          cancelable: true,
+          
+        }
+        )
+        return false;
+    } else if (password.length < 8) {
+      Alert.alert(
+        "Warning",
+        ` Password is incorrect. try again`,
+        [
+          {
+            text: "Okayy!",
+        
+            style: "Okayy!",
+          },
+        ],
+        {
+          cancelable: true,
+          
+        }
+        )
+        return false;
+    }
+
+    return true;
+}
+  const handleLogin = () => {
+   
+    if(email && password ){
+
+        try {
+    if(validateFormFields()){
+
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(userCredentials => {
+          const user = userCredentials.user;
+          console.log('Logged in with:', user.email);
+          navigation.navigate("Pick Image");
+        }).catch((err) => {
+          console.log(err);
+            Alert.alert(
+              "Warning",
+              ` Email or password is incorrect`, 
+              [
+                {
+                  text: "Okayy!",
+              
+                  style: "Okayy!",
+                },
+              ],
+              {
+                cancelable: true,
+                
+              }
+              )
+        })
+    }else{
+      console.log("try again");
+      Alert.alert(
+        "Warning",
+        ` Email or password is incorrect`,
+        [
+          {
+            text: "Okayy!",
+        
+            style: "Okayy!",
+          },
+        ],
+        {
+          cancelable: true,
+          
+        }
+        )
+    }
+      
+      
+    } catch (error) {
+     
+    }
+    }else{
+      console.log("empty fields");
+      Alert.alert(
+        "Warning",
+        ` Fields cannot be empty`,
+        [
+          {
+            text: "Okayy!",
+        
+            style: "Okayy!",
+          },
+        ],
+        {
+          cancelable: true,
+          
+        }
+        )
+    }
+
+  
    
       
   }
@@ -127,6 +253,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'white',
+    color: "black",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
@@ -161,4 +288,5 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
   },
+  
 })

@@ -9,6 +9,7 @@ import {
   Image,
   StyleSheet,
   useWindowDimensions,
+  TouchableOpacity,
   Text,
   Alert,
 } from 'react-native';
@@ -22,6 +23,7 @@ import { recognizeImage, Response } from '../mlkit';
 import * as routes from '../navigation/routes';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FadeInFromBottomAndroidSpec } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionSpecs';
+// import { TouchableOpacity } from 'react-native-gesture-handler/lib/typescript/components/touchables';
 
 type SelectImageScreenProps = {
   navigation: SelectScreenNavigationProps;
@@ -252,16 +254,52 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
     }
   };
 
+  const handleSignOut = () => {
+    auth()
+      .signOut()
+      .then(() => {
+        navigation.navigate("Authentication")
+      })
+      .catch(error =>  Alert.alert(
+        "Error occured",
+        ` ${error.message}`,
+        [
+          {
+            text: "Okayy!",
+            // onPress: () => Alert.alert("Okayy! Pressed"),
+            style: "Okayy!",
+          },
+        ],
+        {
+          cancelable: true,
+          
+        }
+        ))
+  }
 
 
   const onReportScreen = () => {
     navigation.navigate(routes.REPORT_SCREEN);
   }
+
+  const onSearchScreen = () => {
+    navigation.navigate(routes.SEARCH_SCREEN);
+  }
+
   return (
     <View style={{}}>
 
-      <SafeAreaView style={{}}>
+      <View style={{flexDirection:'row', paddingBottom: 8}}>
+        
+      <DemoButton key="Signout" onPress={handleSignOut} >
+            {'Signout'}
+          </DemoButton>
+          <DemoButton key="SearchScreen" onPress={onSearchScreen}>
+            {'Search'}
+          </DemoButton>
+          </View>
         <View style={{ flexDirection: 'row', paddingBottom: 8 }}>
+        
           <DemoButton key="Process Image" onPress={onProcessImage}>
             {'Process Image'}
           </DemoButton>
@@ -269,6 +307,7 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
             {'View Reports'}
           </DemoButton>
         </View>
+       
         <View style={{ flexDirection: 'row', paddingVertical: 8 }}>
           <DemoButton
             key="Take Image"
@@ -293,20 +332,13 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
             {'Select Image'}
           </DemoButton>
         </View>
-        <ScrollView style={{ height: '40%' }}>
-          <View style={{ paddingHorizontal: 8, }}>
+        <ScrollView style={{ }}>
+          <View style={{ paddingHorizontal: 8, height: 200 }}>
             <DemoResponse blockText={imageTextResponse?.blocks}>
-              {/* {
-            imageTextResponse?.blocks
-            .map((b,bi)=>{
-              b.lines.map((l,li)=> {
-                console.log(" L === ",b);
-                return b.text;
-              })
-            })
-          } */}
+            
             </DemoResponse>
           </View>
+         
         </ScrollView>
 
         {response?.assets &&
@@ -321,7 +353,8 @@ export const SelectImageScreen = ({ navigation }: SelectImageScreenProps) => {
               />
             </View>
           ))}
-      </SafeAreaView>
+  
+
     </View>
   );
 };
@@ -331,6 +364,19 @@ const styles = StyleSheet.create({
     // marginVertical: 24,
 
     alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  button: {
+    backgroundColor: '#0782F9',
+    width: '60%',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 40,
   },
 
 });
